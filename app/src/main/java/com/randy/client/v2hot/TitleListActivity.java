@@ -4,15 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -33,40 +28,23 @@ public class TitleListActivity extends ActionBarActivity {
 
         final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.pull);
 
-        final ArrayAdapter<Topic> topicsAdapter = new ArrayAdapter<Topic>(this, 0) {
+        final TopicsAdapter topicsAdapter = new TopicsAdapter(this,
+                new TopicsAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Topic topic) {
+                        Intent intent = new Intent(TitleListActivity.this, ContentActivity.class);
+                        intent.putExtra("id", topic.id);
+                        intent.putExtra("title", topic.title);
+                        intent.putExtra("username", topic.member.username);
+                        intent.putExtra("url", topic.url);
+                        intent.putExtra("content", topic.content);
+                        startActivity(intent);
+                    }
+                });
 
-            private final LayoutInflater inflater = LayoutInflater.from(getContext());
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                if (convertView == null) {
-                    convertView = inflater.inflate(R.layout.topic_item, parent, false);
-                }
-
-                TextView title = (TextView) convertView.findViewById(R.id.title);
-                title.setText(getItem(position).title);
-
-                return convertView;
-            }
-
-        };
-
-        final ListView topicsView = (ListView) findViewById(R.id.topics);
-
+        final RecyclerView topicsView = (RecyclerView) findViewById(R.id.topics);
+        topicsView.setLayoutManager(new LinearLayoutManager(this));
         topicsView.setAdapter(topicsAdapter);
-        topicsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Topic topic = topicsAdapter.getItem(position);
-                Intent intent = new Intent(TitleListActivity.this, ContentActivity.class);
-                intent.putExtra("id", topic.id);
-                intent.putExtra("title", topic.title);
-                intent.putExtra("username", topic.member.username);
-                intent.putExtra("url", topic.url);
-                intent.putExtra("content", topic.content);
-                startActivity(intent);
-            }
-        });
 
         //创建volley请求队列
         final RequestQueue queue = Volley.newRequestQueue(this);
@@ -77,9 +55,7 @@ public class TitleListActivity extends ActionBarActivity {
                 new Response.Listener<TopicList>() {
                     @Override
                     public void onResponse(TopicList response) {
-                        topicsAdapter.clear();
-                        topicsAdapter.addAll(response);
-                        topicsAdapter.notifyDataSetChanged();
+                        topicsAdapter.setTopics(response);
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 },

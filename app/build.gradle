@@ -25,6 +25,9 @@ dependencies {
     //noinspection GradleDependency,GradleDynamicVersion
     compile 'com.android.support:appcompat-v7:+'
 
+    //noinspection GradleDynamicVersion
+    compile 'com.android.support:recyclerview-v7:+'
+
     compile 'com.mcxiaoke.volley:library:1.0.6'
     compile 'com.google.code.gson:gson:2.3'
 
