@@ -48,6 +48,8 @@ public class ContentActivity extends ActionBarActivity {
         title = intent.getStringExtra("title");
         url = intent.getStringExtra("url");
 
+        setTitle(title);
+
         final RepliesAdapter repliesAdapter = new RepliesAdapter(this, username);
         ListView repliesView = (ListView) findViewById(R.id.replies);
 
