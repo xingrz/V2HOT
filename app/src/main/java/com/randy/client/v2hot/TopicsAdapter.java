@@ -16,10 +16,14 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView title;
+        public TextView username;
+        public TextView overview;
 
         public ViewHolder(View v) {
             super(v);
             this.title = (TextView) v.findViewById(R.id.title);
+            this.username = (TextView) v.findViewById(R.id.username);
+            this.overview = (TextView) v.findViewById(R.id.overview);
         }
 
     }
@@ -50,6 +54,9 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
         final Topic item = topics.get(i);
 
         holder.title.setText(item.title);
+        holder.username.setText(item.member.username);
+        holder.overview.setText(item.content);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -42,7 +43,7 @@ public class TitleListActivity extends ActionBarActivity {
                     }
                 });
 
-        final RecyclerView topicsView = (RecyclerView) findViewById(R.id.topics);
+        RecyclerView topicsView = (RecyclerView) findViewById(R.id.topics);
         topicsView.setLayoutManager(new LinearLayoutManager(this));
         topicsView.setAdapter(topicsAdapter);
 
