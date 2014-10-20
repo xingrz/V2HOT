@@ -1,51 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/card_list_background">
+    android:background="?android:attr/selectableItemBackground"
+    android:padding="@dimen/normal_spacing">
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/card_spacing"
-        android:layout_marginRight="@dimen/card_spacing"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/card"
-        android:padding="@dimen/normal_spacing">
+        android:layout_toLeftOf="@+id/username"
+        android:layout_toStartOf="@+id/username"
+        android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/username"
-            android:layout_toStartOf="@+id/username"
-            android:textSize="16sp" />
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:ellipsize="end"
+        android:maxWidth="60dp"
+        android:singleLine="true"
+        android:textColor="@android:color/secondary_text_light_nodisable"
+        android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="4dp"
-            android:layout_marginStart="4dp"
-            android:ellipsize="end"
-            android:maxWidth="60dp"
-            android:singleLine="true"
-            android:textColor="@android:color/secondary_text_light_nodisable"
-            android:textSize="12sp" />
+    <TextView
+        android:id="@+id/overview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@android:color/secondary_text_light_nodisable"
+        android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/overview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/title"
-            android:layout_marginTop="4dp"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:textColor="@android:color/secondary_text_light_nodisable"
-            android:textSize="14sp" />
-
-    </RelativeLayout>
-</FrameLayout>
+</RelativeLayout>
