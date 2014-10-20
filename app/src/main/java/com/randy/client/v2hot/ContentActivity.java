@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,15 +51,18 @@ public class ContentActivity extends ActionBarActivity {
         url = intent.getStringExtra("url");
 
         final RepliesAdapter repliesAdapter = new RepliesAdapter(this, username);
-        ListView repliesView = (ListView) findViewById(R.id.replies);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+
+        RecyclerView repliesView = (RecyclerView) findViewById(R.id.replies);
+        repliesView.setLayoutManager(layoutManager);
+        repliesView.setAdapter(repliesAdapter);
 
         View headerView = getLayoutInflater().inflate(R.layout.topic_header, repliesView, false);
         ((TextView) headerView.findViewById(R.id.header_title)).setText(title);
         ((TextView) headerView.findViewById(R.id.header_content)).setText(content);
         ((TextView) headerView.findViewById(R.id.header_username)).setText(username);
-
-        repliesView.addHeaderView(headerView);
-        repliesView.setAdapter(repliesAdapter);
+        //layoutManager.addView(headerView);
 
         RequestQueue queue = Volley.newRequestQueue(ContentActivity.this);
 
@@ -67,8 +72,7 @@ public class ContentActivity extends ActionBarActivity {
                 new Response.Listener<ReplyList>() {
                     @Override
                     public void onResponse(ReplyList response) {
-                        repliesAdapter.addAll(response);
-                        repliesAdapter.notifyDataSetChanged();
+                        repliesAdapter.setReplies(response);
                     }
                 },
                 new Response.ErrorListener() {

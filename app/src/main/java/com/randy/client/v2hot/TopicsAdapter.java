@@ -19,11 +19,11 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
         public TextView username;
         public TextView overview;
 
-        public ViewHolder(View v) {
-            super(v);
-            this.title = (TextView) v.findViewById(R.id.title);
-            this.username = (TextView) v.findViewById(R.id.username);
-            this.overview = (TextView) v.findViewById(R.id.overview);
+        public ViewHolder(View itemView) {
+            super(itemView);
+            this.title = (TextView) itemView.findViewById(R.id.title);
+            this.username = (TextView) itemView.findViewById(R.id.username);
+            this.overview = (TextView) itemView.findViewById(R.id.overview);
         }
 
     }
@@ -50,7 +50,7 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int i) {
+    public void onBindViewHolder(ViewHolder holder, int i) {
         final Topic item = topics.get(i);
 
         holder.title.setText(item.title);

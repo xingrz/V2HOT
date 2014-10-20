@@ -12,38 +12,34 @@
         android:layout_marginBottom="@dimen/card_spacing"
         android:layout_marginLeft="@dimen/card_spacing"
         android:layout_marginRight="@dimen/card_spacing"
-        android:padding="@dimen/normal_spacing"
-        android:background="@drawable/card_default">
+        android:background="@drawable/card_default"
+        android:padding="@dimen/normal_spacing">
+
         <ImageView
-            android:id="@+id/iv_avatar"
-            android:contentDescription="Avatar"
+            android:id="@+id/avatar"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginRight="5dp"
-            />
-        <LinearLayout
-            android:id="@+id/text_layout"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:contentDescription="Avatar" />
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/iv_avatar"
-            android:layout_toEndOf="@+id/iv_avatar">
-            <TextView
-                android:id="@+id/tv_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:textStyle="bold"
-                android:text="username" />
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@+id/avatar"
+            android:layout_toRightOf="@+id/avatar"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_reply"
-                android:autoLink="web"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="加载中..." />
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/username"
+            android:layout_alignStart="@+id/username"
+            android:layout_below="@+id/username"
+            android:autoLink="web" />
 
     </RelativeLayout>
 </FrameLayout>

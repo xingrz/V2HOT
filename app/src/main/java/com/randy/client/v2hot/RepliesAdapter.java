@@ -1,6 +1,7 @@
 package com.randy.client.v2hot;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,23 +13,23 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.v2ex.api.Reply;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class RepliesAdapter extends ArrayAdapter<Reply> {
+public class RepliesAdapter extends RecyclerView.Adapter<RepliesAdapter.ViewHolder> {
 
-    static class ViewHolder {
-        @InjectView(R.id.tv_username)
-        TextView username;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView avatar;
+        public TextView username;
+        public TextView content;
 
-        @InjectView(R.id.tv_reply)
-        TextView content;
-
-        @InjectView(R.id.iv_avatar)
-        ImageView avatar;
-
-        public ViewHolder(View view) {
-            ButterKnife.inject(this, view);
+        public ViewHolder(View itemView) {
+            super(itemView);
+            this.avatar = (ImageView) itemView.findViewById(R.id.avatar);
+            this.username = (TextView) itemView.findViewById(R.id.username);
+            this.content = (TextView) itemView.findViewById(R.id.content);
         }
     }
 
@@ -40,25 +41,21 @@ public class RepliesAdapter extends ArrayAdapter<Reply> {
     private final LayoutInflater inflater;
     private final String hostUsername;
 
+    private List<Reply> replies;
+
     public RepliesAdapter(Context context, String hostUsername) {
-        super(context, 0);
         this.inflater = LayoutInflater.from(context);
         this.hostUsername = hostUsername;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
+        return new ViewHolder(inflater.inflate(R.layout.reply_item, parent, false));
+    }
 
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.reply_item, parent, false);
-            holder = new ViewHolder(convertView);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
-        Reply item = getItem(position);
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int i) {
+        final Reply item = replies.get(i);
 
         String username = item.member.username;
         holder.username.setText(username.equals(hostUsername) ? username + "(楼主)" : username);
@@ -71,8 +68,21 @@ public class RepliesAdapter extends ArrayAdapter<Reply> {
         }
 
         ImageLoader.getInstance().displayImage(avatar, holder.avatar, IMAGE_OPTIONS);
+    }
 
-        return convertView;
+    @Override
+    public void onViewRecycled(ViewHolder holder) {
+        holder.avatar.setImageBitmap(null);
+    }
+
+    @Override
+    public int getItemCount() {
+        return replies == null ? 0 : replies.size();
+    }
+
+    public void setReplies(List<Reply> replies) {
+        this.replies = replies;
+        notifyDataSetChanged();
     }
 
 }
